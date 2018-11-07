@@ -1,0 +1,26 @@
+{
+  "name": "d3-example",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Slideworx",
+  "contributors": [
+    "Adam Pacanowski <adam.pacanowski@slideworx.com>",
+    "Jan-Kanty Pawelski <jan-kanty.pawelski@slideworx.com>"
+  ],
+  "repository": "Slideworx/d3-example",
+  "scripts": {
+    "build": "react-scripts build",
+    "dev": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "dependencies": {
+    "d3": "^5.7.0",
+    "ramda": "^0.25.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  },
+  "devDependencies": {
+    "react-scripts": "2.1.1"
+  },
+  "private": true
+}
