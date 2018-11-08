@@ -8,15 +8,32 @@ import data from '../data';
 
 
 
+/**
+ * @constructor
+ * @access public
+ * @extends Component
+ */
 export default class Layout extends Component {
+  /**
+   * @function componentDidMount
+   * @access protected
+   */
   componentDidMount() {
     this.renderD3();
   }
 
+  /**
+   * @function componentDidUpdate
+   * @access protected
+   */
   componentDidUpdate() {
     this.renderD3();
   }
 
+  /**
+   * @function renderD3
+   * @access protected
+   */
   renderD3 = () => {
     this
       .selection
@@ -26,6 +43,12 @@ export default class Layout extends Component {
       );
   }
 
+  /**
+   * @function render
+   * @access protected
+   *
+   * @returns {Component}
+   */
   render() {
     const size = {
       height: 500,
