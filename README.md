@@ -17,7 +17,7 @@ npm run build
 npm run dev
 ```
 
-### Test
+### Testing
 
 ```
 npm run test
