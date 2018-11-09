@@ -1,4 +1,37 @@
-import {createModel} from './utils';
+import {of, prop} from 'ramda';
+
+import {cells, columns, rows} from './components';
+import createModel from './model';
+
+
+
+/**
+ * @function enterAndUpdate
+ * @access protected
+ *
+ * @param {Selection} selection
+ */
+function enterAndUpdate(selection) {
+  selection
+    .call(
+      cells,
+      of(
+        prop('cells')
+      )
+    )
+    .call(
+      columns,
+      of(
+        prop('columns')
+      )
+    )
+    .call(
+      rows,
+      of(
+        prop('rows')
+      )
+    );
+}
 
 
 
@@ -8,11 +41,10 @@ import {createModel} from './utils';
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
- *
- * @returns {Selection}
  */
 export default function chart(selection, dataFunction) {
-  selection
+  const group = selection
+    .selectAll('.chart')
     .data(
       createModel(
         selection,
@@ -20,5 +52,19 @@ export default function chart(selection, dataFunction) {
       )
     );
 
-  return selection;
+    group
+      .enter()
+      .append('g')
+      .classed(
+        'chart',
+        true
+      )
+      .call(enterAndUpdate);
+
+    group
+      .exit()
+      .remove();
+
+    group
+      .call(enterAndUpdate);
 }
