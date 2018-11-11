@@ -32,7 +32,7 @@ function getViewBox(selection) {
 
 /**
  * @function getCells
- * @access protected
+ * @access public
  *
  * @param {Object} data
  *
@@ -58,7 +58,7 @@ export function getCells(data) {
 
 /**
  * @function getColumns
- * @access protected
+ * @access public
  *
  * @param {Object} data
  *
@@ -78,7 +78,7 @@ export const getColumns = pipe(
 
 /**
  * @function getFill
- * @access protected
+ * @access public
  *
  * @param {number} strength
  *
@@ -107,7 +107,7 @@ export const getFill = d3
 
 /**
  * @function getR
- * @access protected
+ * @access public
  *
  * @param {number} strength
  *
@@ -136,7 +136,7 @@ export const getR = d3
 
 /**
  * @function getRows
- * @access protected
+ * @access public
  *
  * @param {Object} data
  *
@@ -152,7 +152,7 @@ export const getRows = pipe(
 
 /**
  * @function getScaleX
- * @access protected
+ * @access public
  *
  * @param {Selection} selection
  * @param {Object} data
@@ -182,7 +182,7 @@ export function getScaleX(selection, data) {
 
 /**
  * @function getScaleY
- * @access protected
+ * @access public
  *
  * @param {Selection} selection
  * @param {Object} data

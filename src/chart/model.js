@@ -22,11 +22,11 @@ function createCells(selection, data) {
     data
   );
 
-  return getCells(data).map((cell) => ({
-    fill: getFill(cell.strength),
-    r: getR(cell.strength),
-    x: scaleX(cell.defender),
-    y: scaleY(cell.attacker),
+  return getCells(data).map(({attacker, defender, strength}) => ({
+    fill: getFill(strength),
+    r: getR(strength),
+    x: scaleX(defender),
+    y: scaleY(attacker),
   }));
 }
 
