@@ -39,7 +39,8 @@ export default class Layout extends Component {
       .selection
       .call(
         chart,
-        () => [data]
+        () => [data],
+        {}
       );
   }
 

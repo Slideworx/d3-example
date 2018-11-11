@@ -126,7 +126,7 @@ export const getR = d3
   .range(
     [
       5,
-      10,
+      5,
       5,
       10,
     ]
@@ -156,10 +156,13 @@ export const getRows = pipe(
  *
  * @param {Selection} selection
  * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.left
  *
  * @returns {Function}
  */
-export function getScaleX(selection, data) {
+export function getScaleX(selection, data, config) {
   const {
     width,
   } = getViewBox(selection);
@@ -172,8 +175,8 @@ export function getScaleX(selection, data) {
     .padding(0.5)
     .range(
       [
-        0,
-        width,
+        config.margin.left,
+        width - config.margin.left,
       ]
     );
 }
@@ -186,10 +189,13 @@ export function getScaleX(selection, data) {
  *
  * @param {Selection} selection
  * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.top
  *
  * @returns {Function}
  */
-export function getScaleY(selection, data) {
+export function getScaleY(selection, data, config) {
   const {
     height,
   } = getViewBox(selection);
@@ -202,8 +208,8 @@ export function getScaleY(selection, data) {
     .padding(0.5)
     .range(
       [
-        0,
-        height,
+        config.margin.top,
+        height - config.margin.top,
       ]
     );
 }

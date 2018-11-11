@@ -1,3 +1,25 @@
+import {identity} from 'ramda';
+
+import text from './text';
+
+
+
+/**
+ * @function enterAndUpdate
+ * @access protected
+ *
+ * @param {Selection} selection
+ */
+function enterAndUpdate(selection) {
+  selection
+    .call(
+      text,
+      identity
+    );
+}
+
+
+
 /**
  * @function columns
  * @access public
@@ -16,9 +38,13 @@ export default function columns(selection, dataFunction) {
     .classed(
       'columns',
       true
-    );
+    )
+    .call(enterAndUpdate);
 
   group
     .exit()
     .remove();
+
+  group
+    .call(enterAndUpdate);
 }

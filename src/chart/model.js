@@ -8,18 +8,21 @@ import {getCells, getColumns, getFill, getR, getRows, getScaleX, getScaleY} from
  *
  * @param {Selection} selection
  * @param {Object} data
+ * @param {Object} config
  *
  * @returns {Object}
  */
-function createCells(selection, data) {
+function createCells(selection, data, config) {
   const scaleX = getScaleX(
     selection,
-    data
+    data,
+    config
   );
 
   const scaleY = getScaleY(
     selection,
-    data
+    data,
+    config
   );
 
   return getCells(data).map(({attacker, defender, strength}) => ({
@@ -36,19 +39,23 @@ function createCells(selection, data) {
  *
  * @param {Selection} selection
  * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.top
  *
  * @returns {Object}
  */
-function createColumns(selection, data) {
+function createColumns(selection, data, config) {
   const scaleX = getScaleX(
     selection,
-    data
+    data,
+    config
   );
 
   return getColumns(data).map((column) => ({
     text: column,
     x: scaleX(column),
-    y: 0,
+    y: config.margin.top / 2,
   }));
 }
 
@@ -58,18 +65,22 @@ function createColumns(selection, data) {
  *
  * @param {Selection} selection
  * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.left
  *
  * @returns {Object}
  */
-function createRows(selection, data) {
+function createRows(selection, data, config) {
   const scaleY = getScaleY(
     selection,
-    data
+    data,
+    config
   );
 
   return getRows(data).map((row) => ({
     text: row,
-    x: 0,
+    x: config.margin.left / 2,
     y: scaleY(row),
   }));
 }
@@ -82,23 +93,27 @@ function createRows(selection, data) {
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
+ * @param {Object} config
  *
  * @returns {Function}
  */
-export default function createModel(selection, dataFunction) {
+export default function createModel(selection, dataFunction, config) {
   return (datas) => {
     return dataFunction(datas).map((data) => ({
       cells: createCells(
         selection,
-        data
+        data,
+        config
       ),
       columns: createColumns(
         selection,
-        data
+        data,
+        config
       ),
       rows: createRows(
         selection,
-        data
+        data,
+        config
       ),
     }));
   };

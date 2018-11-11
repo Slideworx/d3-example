@@ -1,6 +1,4 @@
-import {identity} from 'ramda';
-
-import text from './text';
+import {prop} from 'ramda';
 
 
 
@@ -12,31 +10,38 @@ import text from './text';
  */
 function enterAndUpdate(selection) {
   selection
-    .call(
-      text,
-      identity
+    .attr(
+      'x',
+      prop('x')
+    )
+    .attr(
+      'y',
+      prop('y')
+    )
+    .text(
+      prop('text')
     );
 }
 
 
 
 /**
- * @function rows
+ * @function text
  * @access public
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
  */
-export default function rows(selection, dataFunction) {
+export default function text(selection, dataFunction) {
   const group = selection
-    .selectAll('.rows')
+    .selectAll('.row')
     .data(dataFunction);
 
   group
     .enter()
-    .append('g')
+    .append('text')
     .classed(
-      'rows',
+      'row',
       true
     )
     .call(enterAndUpdate);
@@ -46,5 +51,5 @@ export default function rows(selection, dataFunction) {
     .remove();
 
   group
-    .call(enterAndUpdate)
+    .call(enterAndUpdate);
 }
