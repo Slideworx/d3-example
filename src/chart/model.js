@@ -1,4 +1,4 @@
-import {getCells, getColumns, getRows, getScaleX, getScaleY} from './utils';
+import {getCells, getColumns, getFill, getR, getRows, getScaleX, getScaleY} from './utils';
 
 
 
@@ -23,7 +23,8 @@ function createCells(selection, data) {
   );
 
   return getCells(data).map((cell) => ({
-    text: cell.strength,
+    fill: getFill(cell.strength),
+    r: getR(cell.strength),
     x: scaleX(cell.defender),
     y: scaleY(cell.attacker),
   }));

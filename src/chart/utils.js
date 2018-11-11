@@ -77,6 +77,64 @@ export const getColumns = pipe(
 
 
 /**
+ * @function getFill
+ * @access protected
+ *
+ * @param {number} strength
+ *
+ * @returns {string}
+ */
+export const getFill = d3
+  .scaleOrdinal()
+  .domain(
+    [
+      0,
+      0.5,
+      1,
+      2,
+    ]
+  )
+  .range(
+    [
+      '#000',
+      '#c00',
+      '#fff',
+      '#0c0',
+    ]
+  );
+
+
+
+/**
+ * @function getR
+ * @access protected
+ *
+ * @param {number} strength
+ *
+ * @returns {number}
+ */
+export const getR = d3
+  .scaleOrdinal()
+  .domain(
+    [
+      0,
+      0.5,
+      1,
+      2,
+    ]
+  )
+  .range(
+    [
+      5,
+      10,
+      10,
+      15,
+    ]
+  );
+
+
+
+/**
  * @function getRows
  * @access protected
  *
