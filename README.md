@@ -17,10 +17,10 @@ npm run build
 npm run dev
 ```
 
-### Testing
+### Linting
 
 ```
-npm run test
+npm run lint
 ```
 
 
