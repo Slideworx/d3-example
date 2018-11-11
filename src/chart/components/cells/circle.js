@@ -1,6 +1,4 @@
-import {identity} from 'ramda';
-
-import circle from './circle';
+import {prop} from 'ramda';
 
 
 
@@ -12,31 +10,43 @@ import circle from './circle';
  */
 function enterAndUpdate(selection) {
   selection
-    .call(
-      circle,
-      identity
+    .attr(
+      'cx',
+      prop('x')
+    )
+    .attr(
+      'cy',
+      prop('y')
+    )
+    .attr(
+      'fill',
+      prop('fill')
+    )
+    .attr(
+      'r',
+      prop('r')
     );
 }
 
 
 
 /**
- * @function cells
+ * @function circle
  * @access public
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
  */
-export default function cells(selection, dataFunction) {
+export default function circle(selection, dataFunction) {
   const group = selection
-    .selectAll('.cells')
+    .selectAll('.cell')
     .data(dataFunction);
 
   group
     .enter()
-    .append('g')
+    .append('circle')
     .classed(
-      'cells',
+      'cell',
       true
     )
     .call(enterAndUpdate);
