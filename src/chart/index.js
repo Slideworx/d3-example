@@ -1,4 +1,4 @@
-import {of, prop} from 'ramda';
+import {of, pipe, prop} from 'ramda';
 
 import {cells, columns, rows} from './components';
 import createModel from './model';
@@ -15,20 +15,23 @@ function enterAndUpdate(selection) {
   selection
     .call(
       cells,
-      of(
-        prop('cells')
+      pipe(
+        prop('cells'),
+        of
       )
     )
     .call(
       columns,
-      of(
-        prop('columns')
+      pipe(
+        prop('columns'),
+        of
       )
     )
     .call(
       rows,
-      of(
-        prop('rows')
+      pipe(
+        prop('rows'),
+        of
       )
     );
 }
