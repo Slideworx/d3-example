@@ -17,7 +17,7 @@ function createCells(selection, data) {
     data
   );
 
-  const scaleY = getScaleX(
+  const scaleY = getScaleY(
     selection,
     data
   );
