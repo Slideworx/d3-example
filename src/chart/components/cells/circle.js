@@ -3,6 +3,29 @@ import {prop} from 'ramda';
 
 
 /**
+ * @function enter
+ * @access protected
+ *
+ * @param {Selection} selection
+ */
+function enter(selection) {
+  selection
+    .attr(
+      'opacity',
+      prop('opacity')
+    )
+    .attr(
+      'r',
+      0
+    )
+    .transition()
+    .attr(
+      'r',
+      prop('r')
+    );
+}
+
+/**
  * @function enterAndUpdate
  * @access protected
  *
@@ -21,6 +44,21 @@ function enterAndUpdate(selection) {
     .attr(
       'fill',
       prop('fill')
+    );
+}
+
+/**
+ * @function update
+ * @access protected
+ *
+ * @param {Selection} selection
+ */
+function update(selection) {
+  selection
+    .transition()
+    .attr(
+      'opacity',
+      prop('opacity')
     )
     .attr(
       'r',
@@ -49,6 +87,7 @@ export default function circle(selection, dataFunction) {
       'cell',
       true
     )
+    .call(enter)
     .call(enterAndUpdate);
 
   group
@@ -56,5 +95,6 @@ export default function circle(selection, dataFunction) {
     .remove();
 
   group
-    .call(enterAndUpdate);
+    .call(enterAndUpdate)
+    .call(update);
 }

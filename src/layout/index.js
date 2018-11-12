@@ -14,6 +14,15 @@ import data from '../data';
  * @extends Component
  */
 export default class Layout extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      column: null,
+      row: null,
+    };
+  }
+
   /**
    * @function componentDidMount
    * @access protected
@@ -30,6 +39,32 @@ export default class Layout extends Component {
     this.renderD3();
   }
 
+  onColumnClick = (id) => {
+    const {
+      column,
+    } = this.state;
+
+    this.setState(
+      {
+        column: id === column ? null : id,
+        row: null,
+      }
+    );
+  }
+
+  onRowClick = (id) => {
+    const {
+      row,
+    } = this.state;
+
+    this.setState(
+      {
+        column: null,
+        row: id === row ? null : id,
+      }
+    );
+  }
+
   /**
    * @function renderD3
    * @access protected
@@ -40,7 +75,13 @@ export default class Layout extends Component {
       .call(
         chart,
         () => [data],
-        {}
+        {
+          onClick: {
+            column: this.onColumnClick,
+            row: this.onRowClick,
+          },
+          selected: this.state,
+        }
       );
   }
 

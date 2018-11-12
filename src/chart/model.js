@@ -1,4 +1,4 @@
-import {getCells, getColumns, getFill, getR, getRows, getScaleX, getScaleY} from './utils';
+import {getCalcFill, getCalcOpacity, getCalcR, getCalcX, getCalcY, getCells, getColumns, getRows} from './utils';
 
 
 
@@ -13,23 +13,28 @@ import {getCells, getColumns, getFill, getR, getRows, getScaleX, getScaleY} from
  * @returns {Object}
  */
 function createCells(selection, data, config) {
-  const scaleX = getScaleX(
+  const calcFill = getCalcFill(config);
+  const calcOpacity = getCalcOpacity(config);
+  const calcR = getCalcR(config);
+
+  const calcX = getCalcX(
     selection,
     data,
     config
   );
 
-  const scaleY = getScaleY(
+  const calcY = getCalcY(
     selection,
     data,
     config
   );
 
-  return getCells(data).map(({attacker, defender, strength}) => ({
-    fill: getFill(strength),
-    r: getR(strength),
-    x: scaleX(defender),
-    y: scaleY(attacker),
+  return getCells(data).map((cell) => ({
+    fill: calcFill(cell),
+    opacity: calcOpacity(cell),
+    r: calcR(cell),
+    x: calcX(cell.defender),
+    y: calcY(cell.attacker),
   }));
 }
 
@@ -46,15 +51,16 @@ function createCells(selection, data, config) {
  * @returns {Object}
  */
 function createColumns(selection, data, config) {
-  const scaleX = getScaleX(
+  const calcX = getCalcX(
     selection,
     data,
     config
   );
 
   return getColumns(data).map((column) => ({
+    onClick: config.onClick.column.bind(null, column),
     text: column,
-    x: scaleX(column),
+    x: calcX(column),
     y: config.margin.top / 2,
   }));
 }
@@ -72,16 +78,17 @@ function createColumns(selection, data, config) {
  * @returns {Object}
  */
 function createRows(selection, data, config) {
-  const scaleY = getScaleY(
+  const calcY = getCalcY(
     selection,
     data,
     config
   );
 
   return getRows(data).map((row) => ({
+    onClick: config.onClick.row.bind(null, row),
     text: row,
     x: config.margin.left / 2,
-    y: scaleY(row),
+    y: calcY(row),
   }));
 }
 

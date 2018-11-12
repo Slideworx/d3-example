@@ -28,6 +28,179 @@ function getViewBox(selection) {
   };
 }
 
+/**
+ * @function isSelected
+ * @access protected
+ *
+ * @param {Object} config
+ *   @param {Object} config.selected
+ *     @param {?string} config.selected.column
+ *     @param {?string} config.selected.row
+ * @param {Object} cell
+ *   @param {string} cell.attacker
+ *   @param {string} cell.defender
+ *
+ * @returns {Object}
+ */
+function isSelected(config, cell) {
+  return (
+    (
+      !config.selected.column &&
+      !config.selected.row
+    ) ||
+    (
+      cell.defender === config.selected.column ||
+      cell.attacker === config.selected.row
+    )
+  );
+}
+
+
+
+/**
+ * @function getCalcFill
+ * @access public
+ *
+ * @param {Object} config
+ *
+ * @returns {Function}
+ */
+export function getCalcFill(config) {
+  const scale = d3
+    .scaleOrdinal()
+    .domain(
+      [
+        0,
+        0.5,
+        1,
+        2,
+      ]
+    )
+    .range(
+      [
+        '#000',
+        '#c00',
+        '#fff',
+        '#0c0',
+      ]
+    );
+
+  return (cell) => scale(cell.strength);
+}
+
+
+
+/**
+ * @function getCalcOpacity
+ * @access public
+ *
+ * @param {Object} config
+ *
+ * @returns {Function}
+ */
+export function getCalcOpacity(config) {
+  return (cell) => isSelected(config, cell) ? 1 : 0.25;
+}
+
+
+
+/**
+ * @function getCalcR
+ * @access public
+ *
+ * @param {Object} config
+ *
+ * @returns {Function}
+ */
+export function getCalcR(config) {
+  const scale = d3
+    .scaleOrdinal()
+    .domain(
+      [
+        0,
+        0.5,
+        1,
+        2,
+      ]
+    )
+    .range(
+      [
+        5,
+        5,
+        5,
+        10,
+      ]
+    );
+
+  return (cell) => scale(isSelected(config, cell) ? cell.strength : 1);
+}
+
+
+
+/**
+ * @function getCalcX
+ * @access public
+ *
+ * @param {Selection} selection
+ * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.left
+ *
+ * @returns {Function}
+ */
+export function getCalcX(selection, data, config) {
+  const {
+    width,
+  } = getViewBox(selection);
+
+  return d3
+    .scalePoint()
+    .domain(
+      getColumns(data)
+    )
+    .padding(0.5)
+    .range(
+      [
+        config.margin.left,
+        width - config.margin.left,
+      ]
+    );
+}
+
+
+
+/**
+ * @function getCalcY
+ * @access public
+ *
+ * @param {Selection} selection
+ * @param {Object} data
+ * @param {Object} config
+ *   @param {Object} config.margin
+ *     @param {number} config.margin.top
+ *
+ * @returns {Function}
+ */
+export function getCalcY(selection, data, config) {
+  const {
+    height,
+  } = getViewBox(selection);
+
+  return d3
+    .scalePoint()
+    .domain(
+      getRows(data)
+    )
+    .padding(0.5)
+    .range(
+      [
+        config.margin.top,
+        height - config.margin.top,
+      ]
+    );
+}
+
 
 
 /**
@@ -76,63 +249,6 @@ export const getColumns = pipe(
 
 
 
-/**
- * @function getFill
- * @access public
- *
- * @param {number} strength
- *
- * @returns {string}
- */
-export const getFill = d3
-  .scaleOrdinal()
-  .domain(
-    [
-      0,
-      0.5,
-      1,
-      2,
-    ]
-  )
-  .range(
-    [
-      '#000',
-      '#c00',
-      '#fff',
-      '#0c0',
-    ]
-  );
-
-
-
-/**
- * @function getR
- * @access public
- *
- * @param {number} strength
- *
- * @returns {number}
- */
-export const getR = d3
-  .scaleOrdinal()
-  .domain(
-    [
-      0,
-      0.5,
-      1,
-      2,
-    ]
-  )
-  .range(
-    [
-      5,
-      5,
-      5,
-      10,
-    ]
-  );
-
-
 
 /**
  * @function getRows
@@ -147,69 +263,3 @@ export const getRows = pipe(
   uniqBy(identity),
   sortBy(identity)
 );
-
-
-
-/**
- * @function getScaleX
- * @access public
- *
- * @param {Selection} selection
- * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.left
- *
- * @returns {Function}
- */
-export function getScaleX(selection, data, config) {
-  const {
-    width,
-  } = getViewBox(selection);
-
-  return d3
-    .scalePoint()
-    .domain(
-      getColumns(data)
-    )
-    .padding(0.5)
-    .range(
-      [
-        config.margin.left,
-        width - config.margin.left,
-      ]
-    );
-}
-
-
-
-/**
- * @function getScaleY
- * @access public
- *
- * @param {Selection} selection
- * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.top
- *
- * @returns {Function}
- */
-export function getScaleY(selection, data, config) {
-  const {
-    height,
-  } = getViewBox(selection);
-
-  return d3
-    .scalePoint()
-    .domain(
-      getRows(data)
-    )
-    .padding(0.5)
-    .range(
-      [
-        config.margin.top,
-        height - config.margin.top,
-      ]
-    );
-}

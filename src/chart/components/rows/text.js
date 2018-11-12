@@ -18,6 +18,10 @@ function enterAndUpdate(selection) {
       'y',
       prop('y')
     )
+    .on(
+      'click',
+      (d) => d.onClick()
+    )
     .text(
       prop('text')
     );
