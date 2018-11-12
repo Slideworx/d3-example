@@ -7,5 +7,5 @@ import Layout from './layout';
 
 ReactDOM.render(
   <Layout />,
-  document.body
+  document.querySelector('div')
 );

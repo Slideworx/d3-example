@@ -39,6 +39,12 @@ export default class Layout extends Component {
     this.renderD3();
   }
 
+  /**
+   * @function onColumnClick
+   * @access protected
+   *
+   * @param {string} id
+   */
   onColumnClick = (id) => {
     const {
       column,
@@ -52,6 +58,12 @@ export default class Layout extends Component {
     );
   }
 
+  /**
+   * @function onRowClick
+   * @access protected
+   *
+   * @param {string} id
+   */
   onRowClick = (id) => {
     const {
       row,

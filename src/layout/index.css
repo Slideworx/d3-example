@@ -1,12 +1,12 @@
 body {
   background: #eee;
-  margin: 0;
-  padding: 20px;
 }
 
 svg {
-  display: block;
-  margin: 0 auto;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 text {

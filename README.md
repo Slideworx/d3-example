@@ -17,12 +17,6 @@ npm run build
 npm run dev
 ```
 
-### Linting
-
-```
-npm run lint
-```
-
 
 
 [dependencies]: https://img.shields.io/david/Slideworx/d3-example.svg

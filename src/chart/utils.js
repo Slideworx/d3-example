@@ -40,7 +40,7 @@ function getViewBox(selection) {
  *   @param {string} cell.attacker
  *   @param {string} cell.defender
  *
- * @returns {Object}
+ * @returns {boolean}
  */
 function isSelected(config, cell) {
   return (
@@ -61,11 +61,9 @@ function isSelected(config, cell) {
  * @function getCalcFill
  * @access public
  *
- * @param {Object} config
- *
  * @returns {Function}
  */
-export function getCalcFill(config) {
+export function getCalcFill() {
   const scale = d3
     .scaleOrdinal()
     .domain(
@@ -132,7 +130,7 @@ export function getCalcR(config) {
       ]
     );
 
-  return (cell) => scale(isSelected(config, cell) ? cell.strength : 1);
+  return (cell) => isSelected(config, cell) ? scale(cell.strength) : 5;
 }
 
 
