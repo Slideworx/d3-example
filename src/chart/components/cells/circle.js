@@ -11,10 +11,6 @@ import {prop} from 'ramda';
 function enter(selection) {
   selection
     .attr(
-      'opacity',
-      prop('opacity')
-    )
-    .attr(
       'r',
       0
     )
@@ -55,11 +51,6 @@ function enterAndUpdate(selection) {
  */
 function update(selection) {
   selection
-    .transition()
-    .attr(
-      'opacity',
-      prop('opacity')
-    )
     .attr(
       'r',
       prop('r')

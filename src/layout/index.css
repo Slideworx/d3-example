@@ -10,7 +10,6 @@ svg {
 }
 
 text {
-  cursor: pointer;
   dominant-baseline: central;
   font-family: sans-serif;
   font-size: 10px;

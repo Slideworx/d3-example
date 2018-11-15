@@ -44,26 +44,14 @@ function enterAndUpdate(selection) {
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
- * @param {Object} config
  */
-export default function chart(selection, dataFunction, config) {
-  const defaultConfig = {
-    margin: {
-      left: 60,
-      top: 30,
-    },
-  };
-
+export default function chart(selection, dataFunction) {
   const group = selection
     .selectAll('.chart')
     .data(
       createModel(
         selection,
-        dataFunction,
-        {
-          ...defaultConfig,
-          ...config
-        }
+        dataFunction
       )
     );
 
