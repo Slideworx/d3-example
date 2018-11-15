@@ -4,7 +4,6 @@ import * as d3 from 'd3';
 import React, {Component} from 'react';
 
 import chart from '../chart';
-import data from '../data';
 
 
 
@@ -14,15 +13,6 @@ import data from '../data';
  * @extends Component
  */
 export default class Layout extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      column: null,
-      row: null,
-    };
-  }
-
   /**
    * @function componentDidMount
    * @access protected
@@ -40,61 +30,13 @@ export default class Layout extends Component {
   }
 
   /**
-   * @function onColumnClick
-   * @access protected
-   *
-   * @param {string} id
-   */
-  onColumnClick = (id) => {
-    const {
-      column,
-    } = this.state;
-
-    this.setState(
-      {
-        column: id === column ? null : id,
-        row: null,
-      }
-    );
-  }
-
-  /**
-   * @function onRowClick
-   * @access protected
-   *
-   * @param {string} id
-   */
-  onRowClick = (id) => {
-    const {
-      row,
-    } = this.state;
-
-    this.setState(
-      {
-        column: null,
-        row: id === row ? null : id,
-      }
-    );
-  }
-
-  /**
    * @function renderD3
    * @access protected
    */
   renderD3 = () => {
     this
       .selection
-      .call(
-        chart,
-        () => [data],
-        {
-          onClick: {
-            column: this.onColumnClick,
-            row: this.onRowClick,
-          },
-          selected: this.state,
-        }
-      );
+      .call(chart);
   }
 
   /**
