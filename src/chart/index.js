@@ -1,6 +1,6 @@
 import {of, pipe, prop} from 'ramda';
 
-import {cells, columns, rows} from './components';
+import {cells} from './components';
 import createModel from './model';
 
 
@@ -19,20 +19,6 @@ function enterAndUpdate(selection) {
         prop('cells'),
         of
       )
-    )
-    .call(
-      columns,
-      pipe(
-        prop('columns'),
-        of
-      )
-    )
-    .call(
-      rows,
-      pipe(
-        prop('rows'),
-        of
-      )
     );
 }
 
@@ -44,26 +30,14 @@ function enterAndUpdate(selection) {
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
- * @param {Object} config
  */
-export default function chart(selection, dataFunction, config) {
-  const defaultConfig = {
-    margin: {
-      left: 60,
-      top: 30,
-    },
-  };
-
+export default function chart(selection, dataFunction) {
   const group = selection
     .selectAll('.chart')
     .data(
       createModel(
         selection,
-        dataFunction,
-        {
-          ...defaultConfig,
-          ...config
-        }
+        dataFunction
       )
     );
 
