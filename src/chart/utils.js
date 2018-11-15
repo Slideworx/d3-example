@@ -28,33 +28,6 @@ function getViewBox(selection) {
   };
 }
 
-/**
- * @function isSelected
- * @access protected
- *
- * @param {Object} config
- *   @param {Object} config.selected
- *     @param {?string} config.selected.column
- *     @param {?string} config.selected.row
- * @param {Object} cell
- *   @param {string} cell.attacker
- *   @param {string} cell.defender
- *
- * @returns {boolean}
- */
-function isSelected(config, cell) {
-  return (
-    (
-      !config.selected.column &&
-      !config.selected.row
-    ) ||
-    (
-      cell.defender === config.selected.column ||
-      cell.attacker === config.selected.row
-    )
-  );
-}
-
 
 
 /**
@@ -89,28 +62,12 @@ export function getCalcFill() {
 
 
 /**
- * @function getCalcOpacity
- * @access public
- *
- * @param {Object} config
- *
- * @returns {Function}
- */
-export function getCalcOpacity(config) {
-  return (cell) => isSelected(config, cell) ? 1 : 0.25;
-}
-
-
-
-/**
  * @function getCalcR
  * @access public
  *
- * @param {Object} config
- *
  * @returns {Function}
  */
-export function getCalcR(config) {
+export function getCalcR() {
   const scale = d3
     .scaleOrdinal()
     .domain(
@@ -130,7 +87,7 @@ export function getCalcR(config) {
       ]
     );
 
-  return (cell) => isSelected(config, cell) ? scale(cell.strength) : 5;
+  return (cell) => scale(cell.strength);
 }
 
 
@@ -141,13 +98,10 @@ export function getCalcR(config) {
  *
  * @param {Selection} selection
  * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.left
  *
  * @returns {Function}
  */
-export function getCalcX(selection, data, config) {
+export function getCalcX(selection, data) {
   const {
     width,
   } = getViewBox(selection);
@@ -160,8 +114,8 @@ export function getCalcX(selection, data, config) {
     .padding(0.5)
     .range(
       [
-        config.margin.left,
-        width - config.margin.left,
+        0,
+        width,
       ]
     );
 }
@@ -174,13 +128,10 @@ export function getCalcX(selection, data, config) {
  *
  * @param {Selection} selection
  * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.top
  *
  * @returns {Function}
  */
-export function getCalcY(selection, data, config) {
+export function getCalcY(selection, data) {
   const {
     height,
   } = getViewBox(selection);
@@ -193,8 +144,8 @@ export function getCalcY(selection, data, config) {
     .padding(0.5)
     .range(
       [
-        config.margin.top,
-        height - config.margin.top,
+        0,
+        height,
       ]
     );
 }

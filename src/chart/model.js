@@ -1,4 +1,4 @@
-import {getCalcFill, getCalcOpacity, getCalcR, getCalcX, getCalcY, getCells, getColumns, getRows} from './utils';
+import {getCalcFill, getCalcR, getCalcX, getCalcY, getCells, getColumns, getRows} from './utils';
 
 
 
@@ -8,30 +8,25 @@ import {getCalcFill, getCalcOpacity, getCalcR, getCalcX, getCalcY, getCells, get
  *
  * @param {Selection} selection
  * @param {Object} data
- * @param {Object} config
  *
  * @returns {Object}
  */
-function createCells(selection, data, config) {
-  const calcFill = getCalcFill(config);
-  const calcOpacity = getCalcOpacity(config);
-  const calcR = getCalcR(config);
+function createCells(selection, data) {
+  const calcFill = getCalcFill();
+  const calcR = getCalcR();
 
   const calcX = getCalcX(
     selection,
-    data,
-    config
+    data
   );
 
   const calcY = getCalcY(
     selection,
-    data,
-    config
+    data
   );
 
   return getCells(data).map((cell) => ({
     fill: calcFill(cell),
-    opacity: calcOpacity(cell),
     r: calcR(cell),
     x: calcX(cell.defender),
     y: calcY(cell.attacker),
@@ -44,24 +39,19 @@ function createCells(selection, data, config) {
  *
  * @param {Selection} selection
  * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.top
  *
  * @returns {Object}
  */
-function createColumns(selection, data, config) {
+function createColumns(selection, data) {
   const calcX = getCalcX(
     selection,
-    data,
-    config
+    data
   );
 
   return getColumns(data).map((column) => ({
-    onClick: config.onClick.column.bind(null, column),
     text: column,
     x: calcX(column),
-    y: config.margin.top / 2,
+    y: 0,
   }));
 }
 
@@ -71,23 +61,18 @@ function createColumns(selection, data, config) {
  *
  * @param {Selection} selection
  * @param {Object} data
- * @param {Object} config
- *   @param {Object} config.margin
- *     @param {number} config.margin.left
  *
  * @returns {Object}
  */
-function createRows(selection, data, config) {
+function createRows(selection, data) {
   const calcY = getCalcY(
     selection,
-    data,
-    config
+    data
   );
 
   return getRows(data).map((row) => ({
-    onClick: config.onClick.row.bind(null, row),
     text: row,
-    x: config.margin.left / 2,
+    x: 0,
     y: calcY(row),
   }));
 }
@@ -100,27 +85,23 @@ function createRows(selection, data, config) {
  *
  * @param {Selection} selection
  * @param {Function} dataFunction
- * @param {Object} config
  *
  * @returns {Function}
  */
-export default function createModel(selection, dataFunction, config) {
+export default function createModel(selection, dataFunction) {
   return (datas) => {
     return dataFunction(datas).map((data) => ({
       cells: createCells(
         selection,
-        data,
-        config
+        data
       ),
       columns: createColumns(
         selection,
-        data,
-        config
+        data
       ),
       rows: createRows(
         selection,
-        data,
-        config
+        data
       ),
     }));
   };
